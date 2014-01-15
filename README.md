@@ -6,7 +6,7 @@ Compatible with Redmine 2.3.x
 
 
 
-First we need modify /app/views/timelog/_date_range.html.erb to add "Save" button to Spent time form
+First we need modify "/app/views/timelog/\_date_range.html.erb" to add "Save" button to Spent time form
 
 
 
@@ -54,7 +54,7 @@ First we need modify /app/views/timelog/_date_range.html.erb to add "Save" butto
 
 
 
-Copy source to /plugins/redmine_save_spent_time_queries
+Copy source to "/plugins/redmine_save_spent_time_queries"
 
 
 Run rake redmine:plugins:migrate
