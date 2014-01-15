@@ -1,0 +1,44 @@
+<h2>Spent time queries</h2>
+
+
+<div style="width: 400px">
+	<table class="list time-entries">
+	<thead>
+	  <tr>
+			<th>Name</th>
+			<th style="text-align: center">Public</th>
+			<th style="text-align: center">Created By</th>
+			<th>&nbsp;&nbsp;&nbsp;</th>
+	  </tr>
+	</thead>
+	<tbody>
+	<% @queries.each do |query| %>
+	  <tr>
+	  	<td>
+	  		<a href="<%= (query.query + '#query=' + query.name) %>">
+	  			<%= query.name %>
+	  		</a>
+	  	</td>
+	  	<td align="center">
+	  		<%= (query.is_public ? "Yes" : "No") %>
+	  	</td>  	
+		<td align="center">
+	  		<%= User.current.login %>
+	  	</td>  	
+	 	<td align="center">
+	 		
+	 		<% if @project.nil? %>
+	 		
+	 		<%= link_to 'Delete', { :action => 'delete', :query_id => query[:id] }, :method => :delete %>
+	 		
+	 		<% else %>
+	 		
+	 		<%= link_to 'Delete', { :action => 'delete', :id =>@project, :query_id => query[:id] }, :method => :delete %>
+	 		
+	 		<% end %>
+	 	</td>  	
+	  </tr>
+	<% end %>
+	</tbody>
+	</table>
+<div>
