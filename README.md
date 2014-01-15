@@ -1,4 +1,4 @@
-= redmine_save_spent_time_queries
+# redmine_save_spent_time_queries
 
 
 
