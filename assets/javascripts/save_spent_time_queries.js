@@ -18,6 +18,7 @@ $(document).ready(function(){
 	}
 	
 	$("#top-menu").css("visibility", "visible");
+	$("#main").css("visibility", "visible");
 });
 
 // Decorate
@@ -27,8 +28,8 @@ if(location.href.indexOf("#query=") != -1) {
 	$("#content div.contextual").html('<a href="/spent_time_query/" class="icon icon-edit">Spent time queries</a>');
 	$("#content p.breadcrumb").remove();
 	$("#content form#query_form").remove();
-	$("#content h2").html($("#content h2").html() + " - " + query.substr(query.indexOf("=") + 1));
+	$("#content h2").html($("#content h2").html() + " - " + decodeURIComponent(query.substr(query.indexOf("=") + 1)));
 	$("#content p.pagination a").each(function(){
-		$(this).attr("href", $(this).attr("href") + query);
+		$(this).attr("href", $(this).attr("href") + decodeURIComponent(query));
 	});
 }
