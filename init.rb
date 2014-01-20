@@ -5,10 +5,10 @@ require 'spent_time_application_controller_patch'
 Redmine::Plugin.register :redmine_save_spent_time_queries do
   name 'Redmine Save Spent Time Queries plugin'
   author 'Qui'
-  description 'This is a plugin for Redmine'
+  description 'This plugin allow to save spent time queries'
   version '0.0.1'
-  url 'https://github.com/quinvit/redmine_save_spent_time_queries'
-  author_url 'http://www.codeproject.com/Members/quiit'
+  url 'http://example.com/path/to/plugin'
+  author_url 'http://example.com/about'
     
   menu :top_menu, :spent_time_query, { :controller => 'timelog', :action => 'index' }, :caption => 'Spent time queries '
 

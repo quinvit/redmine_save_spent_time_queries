@@ -15,12 +15,20 @@
 			<input id="query_is_public" name="query[is_public]" type="checkbox" value="1" />
 		</p>
 		
-		<input name="query[value]" type="hidden" value="<%= URI.unescape(request.query_string) %>" />
+		<input name="query[value]" type="hidden" value="<%= CGI.unescape(request.query_string) %>" />
 		
 		<p><%= submit_tag l(:button_save) %></p>
-	</div>
-	
+	</div>	
 
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		if(location.href.indexOf("#query=") != -1) {	
+			var query = location.href.substr(location.href.indexOf("#query=") + 7);	
+			$("#query_name").val(decodeURIComponent(query));
+		}	
+	});
+</script>
 
 <% end %>

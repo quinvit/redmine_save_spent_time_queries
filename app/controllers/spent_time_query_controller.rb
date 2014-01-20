@@ -1,7 +1,6 @@
 class SpentTimeQueryController < ApplicationController
   
   before_filter :authorize, :except => [:new, :index, :delete, :save]
-  before_filter :authorize_global, :only => [:new, :index, :delete, :save]
 
   rescue_from Query::StatementInvalid, :with => :query_statement_invalid
 
@@ -36,12 +35,19 @@ class SpentTimeQueryController < ApplicationController
         value = '/projects/' + @project.identifier + '/time_entries?' + params[:query][:value]
     end
     
-    query = SpentTimeQuery.create(
-              :name => params[:query][:name], 
-              :query => value, 
-              :is_public => params[:query][:is_public],
-              :user_id => User.current.id
-              )
+    begin
+      query = SpentTimeQuery.find_by_name(params[:query][:name])
+      query.query = value
+      query.is_public = params[:query][:is_public]
+      query.save
+    rescue ActiveRecord::RecordNotFound
+      query = SpentTimeQuery.create(
+                :name => params[:query][:name], 
+                :query => value, 
+                :is_public => params[:query][:is_public],
+                :user_id => User.current.id
+                )      
+    end
 
     redirect_to :action => 'index'
   end
