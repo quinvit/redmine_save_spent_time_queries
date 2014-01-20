@@ -14,7 +14,7 @@ $(document).ready(function(){
 	if($('#top-menu ul').dropit && spent_time_ul != '<ul></ul>'){
 		spent_time_queries_menu.append(spent_time_ul);		
 		$("#top-menu ul li a.spent-time-query").html($("#top-menu ul li a.spent-time-query").html() + " ▽");	
-		$('#top-menu ul').dropit();		
+		$('#top-menu ul').dropit({ action: 'hover' });		
 	}
 	
 	$("#top-menu").css("visibility", "visible");

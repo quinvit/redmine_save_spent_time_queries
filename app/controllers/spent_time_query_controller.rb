@@ -35,12 +35,12 @@ class SpentTimeQueryController < ApplicationController
         value = '/projects/' + @project.identifier + '/time_entries?' + params[:query][:value]
     end
     
-    begin
-      query = SpentTimeQuery.find_by_name(params[:query][:name])
+    query = SpentTimeQuery.find_by_name(params[:query][:name])
+    if not query.nil?     
       query.query = value
       query.is_public = params[:query][:is_public]
       query.save
-    rescue ActiveRecord::RecordNotFound
+    else
       query = SpentTimeQuery.create(
                 :name => params[:query][:name], 
                 :query => value, 
@@ -51,5 +51,4 @@ class SpentTimeQueryController < ApplicationController
 
     redirect_to :action => 'index'
   end
-
 end
