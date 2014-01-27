@@ -16,7 +16,7 @@
 			<input id="query_is_public" name="query[is_public]" type="checkbox" value="1" />
 		</p>
 		
-		<input name="query[type]" type="hidden" value="details" />
+		<input name="query[type]" type="hidden" value="report" />
 		<input name="query[project]" type="hidden" value="<%= @project_id %>" />
 		<input name="query[value]" type="hidden" value="<%= CGI.unescape(request.query_string) %>" />
 		

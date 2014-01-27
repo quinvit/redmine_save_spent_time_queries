@@ -21,7 +21,16 @@
 <p class="buttons hide-when-print">
   <%= link_to_function l(:button_apply), 'submit_query_form("query_form")', :class => 'icon icon-checked' %>
   <%= link_to l(:button_clear), {:project_id => @project, :issue_id => @issue}, :class => 'icon icon-reload'  %>
-  <a class="icon icon-save" href="#" onclick="$('#query_form').attr('action', 'spent_time_query/new' + $(this).attr('href')); submit_query_form('query_form'); return false;">Save</a>
+  
+  <% if @issue.nil? %>
+  
+  <a class="icon icon-save" href="#" 
+  	onclick="$('#query_form').attr('action', '<%= @project ? "/projects/"+ @project.identifier : "" %>/spent_time_query/<%= action_name == 'index' ? 'new' : 'new_report' %>' + $(this).attr('href')); submit_query_form('query_form'); return false;">
+  		Save
+  </a>
+  
+  <% end %>
+  
 </p>
 
 <div class="tabs">

@@ -1,4 +1,4 @@
-<h2>Your spent time queries</h2>
+<h2>Saved spent time queries</h2>
 
 
 <div style="width: 400px">
@@ -7,7 +7,7 @@
 	  <tr>
 			<th>Name</th>
 			<th style="text-align: center">Public</th>
-			<th style="text-align: center">Created By</th>
+			<th style="text-align: center">Author</th>
 			<th>&nbsp;&nbsp;&nbsp;</th>
 	  </tr>
 	</thead>
@@ -23,17 +23,17 @@
 	  		<%= (query.is_public ? "Yes" : "No") %>
 	  	</td>  	
 		<td align="center">
-	  		<%= User.current.login %>
+	  		<%= link_to query.user.login, { :controller => 'people', :action => 'show', :id => query.user_id } %>
 	  	</td>  	
 	 	<td align="center">
 	 		
-	 		<% if @project.nil? %>
+	 		<% if @project_id.nil? %>
 	 		
 	 		<%= link_to 'Delete', { :action => 'delete', :query_id => query[:id] }, :method => :delete %>
 	 		
 	 		<% else %>
 	 		
-	 		<%= link_to 'Delete', { :action => 'delete', :id =>@project, :query_id => query[:id] }, :method => :delete %>
+	 		<%= link_to 'Delete', { :action => 'delete', :id =>@project_id, :query_id => query[:id] }, :method => :delete %>
 	 		
 	 		<% end %>
 	 	</td>  	

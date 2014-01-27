@@ -39,5 +39,10 @@
 
 li.dropit-open a
 {
+	color: #FFF !important;
+}
+
+li.dropit-open a:hover
+{
 	color: #ADD7F3 !important;
 }
