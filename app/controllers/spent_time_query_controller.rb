@@ -22,10 +22,12 @@ class SpentTimeQueryController < ApplicationController
     
     if query.user_id != User.current.id && !User.current.admin
       render_404
+      return   
     else
       query.delete      
       project_id = params[:id]
-      redirect_to :action => 'index', :id => project_id      
+      redirect_to :action => 'index', :id => project_id   
+      return   
     end    
   end
   
@@ -34,9 +36,9 @@ class SpentTimeQueryController < ApplicationController
     report = params[:query][:type] == "details" ? "" : "/report"
     
     if project_id == "" 
-        value = '/time_entries' + report + '?' + params[:query][:value]
+        value = Redmine::Utils::relative_url_root.to_s + '/time_entries' + report + '?' + params[:query][:value]
     else
-        value = '/projects/' + project_id + '/time_entries' + report + '?' + params[:query][:value]
+        value = Redmine::Utils::relative_url_root.to_s + '/projects/' + project_id + '/time_entries' + report + '?' + params[:query][:value]
     end
 
     query = SpentTimeQuery.find_by_name(params[:query][:name])
@@ -44,6 +46,7 @@ class SpentTimeQueryController < ApplicationController
       
       if query.user_id != User.current.id && !User.current.admin
         render_404
+        return   
       else
         query.query = value
         query.name = params[:query][:new_name]
@@ -65,5 +68,6 @@ class SpentTimeQueryController < ApplicationController
     end
 
     redirect_to :action => 'index'
+    return   
   end
 end
