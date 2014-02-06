@@ -47,7 +47,7 @@ if(location.href.indexOf("#query=") != -1 && location.href.indexOf("/time_entrie
 	});		
 	
 	$("#content div.contextual").css("margin-top", "16px");
-	$("#content div.contextual").html('<a href="/spent_time_query/" class="icon icon-edit">Saved queries</a>');
+	$("#content div.contextual").html('<a href="' + relative_url_root + '/spent_time_query/" class="icon icon-edit">Saved queries</a>');
 	$("#content p.breadcrumb").remove();
 	$("#content div.tabs").remove();
 	

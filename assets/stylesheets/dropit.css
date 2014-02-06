@@ -16,6 +16,7 @@
 .dropit .dropit-trigger 
 { 
 	position: relative;
+	z-index: 2000;
 }
 .dropit .dropit-submenu {
     position: absolute;
