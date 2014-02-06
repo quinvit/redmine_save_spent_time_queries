@@ -23,7 +23,17 @@
 	  		<%= (query.is_public ? "Yes" : "No") %>
 	  	</td>  	
 		<td align="center">
+			
+			<% begin %>
+			
 	  		<%= link_to query.user.login, { :controller => 'people', :action => 'show', :id => query.user_id } %>
+	  		
+	  		<% rescue %>
+	  		
+	  		<%= link_to query.user.login, { :controller => 'users', :action => 'show', :id => query.user_id } %>
+	  		
+	  		<% end %>
+	  	
 	  	</td>  	
 	 	<td align="center">
 	 		
