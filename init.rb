@@ -1,6 +1,6 @@
 require 'redmine'
 require 'spent_time_form_hook'
-require 'spent_time_application_controller_patch'
+require 'spent_time_patch'
 
 Redmine::Plugin.register :redmine_save_spent_time_queries do
   name 'Redmine Save Spent Time Queries plugin'

@@ -1,0 +1,62 @@
+<%= form_tag({}) do -%>
+<%= hidden_field_tag 'back_url', url_for(params) %>
+
+<% 
+	inline_columns = @query.inline_columns - [@query.group_by_column]
+%>
+
+<div class="autoscroll">
+<table class="list time-entries">
+<thead>
+  <tr>
+    <th class="checkbox hide-when-print">
+      <%= link_to image_tag('toggle_check.png'),
+        {},
+        :onclick => 'toggleIssuesSelection(this); return false;',
+        :title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}" %>
+    </th>
+    <% inline_columns.each do |column| %>
+      <%= column_header(column) %>
+    <% end %>
+    <th></th>
+  </tr>
+</thead>
+<% previous_group = false %>
+<tbody>
+<% entries.each do |entry| -%>
+
+  <% if @query.grouped? && (group = @query.group_by_column.value(entry)) != previous_group %>
+    <% reset_cycle %>
+    <tr class="group open">
+      <td colspan="<%= query.inline_columns.size + 2 %>">
+        <span class="expander" onclick="toggleRowGroup(this);">&nbsp;</span>
+        <%= group.blank? ? l(:label_none) : column_content(@query.group_by_column, entry) %><span class="count"><%= @time_entry_count_by_group[group].round(1) %>h</span>
+        <%= link_to_function("#{l(:button_collapse_all)}/#{l(:button_expand_all)}",
+                             "toggleAllRowGroups(this)", :class => 'toggle-all') %>
+      </td>
+    </tr>
+    <% previous_group = group %>
+  <% end %>
+
+  <tr class="time-entry <%= cycle("odd", "even") %> hascontextmenu">
+    <td class="checkbox hide-when-print"><%= check_box_tag("ids[]", entry.id, false, :id => nil) %></td>
+    <%= raw inline_columns.map {|column| "<td class=\"#{column.css_classes}\">#{column_content(column, entry)}</td>"}.join %>
+    <td align="center">
+    <% if entry.editable_by?(User.current) -%>
+        <%= link_to image_tag('edit.png'), edit_time_entry_path(entry),
+                                           :title => l(:button_edit) %>
+        <%= link_to image_tag('delete.png'), time_entry_path(entry),
+                                             :data => {:confirm => l(:text_are_you_sure)},
+                                             :method => :delete,
+                                             :title => l(:button_delete) %>
+    <% end -%>
+    </td>
+  </tr>
+<% end -%>
+
+</tbody>
+</table>
+</div>
+<% end -%>
+
+<%= context_menu time_entries_context_menu_path %>

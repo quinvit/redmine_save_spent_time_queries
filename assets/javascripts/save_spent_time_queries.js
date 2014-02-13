@@ -51,9 +51,5 @@ if(location.href.indexOf("#query=") != -1 && location.href.indexOf("/time_entrie
 	$("#content p.breadcrumb").remove();
 	$("#content div.tabs").remove();
 	
-	$("#content h2").html($("#content h2").html() + " - " + decodeURIComponent(query.substr(query.indexOf("=") + 1)));
-	
-	$("#content p.pagination a").each(function(){
-		$(this).attr("href", $(this).attr("href") + decodeURIComponent(query));
-	});	
+	$("#content h2").html($("#content h2").html() + " - " + decodeURIComponent(query.substr(query.indexOf("=") + 1)));	
 }
