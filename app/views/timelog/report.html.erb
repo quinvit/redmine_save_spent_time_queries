@@ -4,7 +4,7 @@
 
 <%= render_timelog_breadcrumb %>
 
-<h2><%= l(:label_spent_time) %></h2>
+<h2><%= l(:label_spent_time) %><%= (@current_query.nil?? '' : ' - ' + @current_query.name) %></h2>
 
 <%= form_tag({:controller => 'timelog', :action => 'report',
               :project_id => @project, :issue_id => @issue},

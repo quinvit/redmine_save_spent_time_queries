@@ -7,7 +7,9 @@
 		<p>
 			<label for="query_name">Name</label>
 			<input id="query_new_name" name="query[new_name]" size="80" type="text" value="" />
-			<input id="query_name" name="query[name]" size="80" type="hidden" value="" />
+			<% if !@current_query.nil? %>
+			<%= hidden_field(:query, :name, :value => "#{@current_query.name}") %>
+			<% end %>
 		</p>
 		
 		<p>
@@ -25,14 +27,5 @@
 
 </div>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		if(location.href.indexOf("#query=") != -1) {	
-			var query = location.href.substr(location.href.indexOf("#query=") + 7);	
-			$("#query_new_name").val(decodeURIComponent(query));
-			$("#query_name").val(decodeURIComponent(query));
-		}	
-	});
-</script>
 
 <% end %>

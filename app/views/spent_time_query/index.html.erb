@@ -26,7 +26,7 @@
 	<% @queries.each do |query| %>
 	  <tr>
 	  	<td>
-	  		<a href="<%= (query.query + '&v[query]=' + query.name) %>">
+	  		<a href="<%= ((query.query.include? "&v[query]=") ? query.query : (query.query + '&v[query]=' + query.name)) %>">
 	  			<%= query.name %>
 	  		</a>
 	  	</td>

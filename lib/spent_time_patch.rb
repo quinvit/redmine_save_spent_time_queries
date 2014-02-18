@@ -14,14 +14,8 @@ module SpentTimeQueryHelper
     @queries
   end  
       
-  def can_edit_current_query
-    query = nil
-    begin
-      query = SpentTimeQuery.find_by_name(params[:v][:query])
-    rescue
-    end
-    
-    @query_editable = query.nil? || query.user_id == User.current.id || User.current.admin
+  def can_edit_current_query    
+    @query_editable = @current_query.nil? || @current_query.user_id == User.current.id || User.current.admin
     @query_editable    
   end     
   
@@ -71,6 +65,7 @@ module TimelogControllerPatch
       unloadable # Send unloadable so it will not be unloaded in development
 
       alias_method_chain :index, :group
+      alias_method_chain :report, :group
     end    
   end
 
@@ -78,12 +73,33 @@ module TimelogControllerPatch
     
     include Redmine::Pagination    
     
+    def report_with_group
+      if !@issue.nil? || !@project.nil?
+        report_without_group
+        return
+      end
+      
+      @current_query = nil
+      begin
+        @current_query = SpentTimeQuery.find_by_name(CGI.unescape(params[:v][:query]))
+      rescue
+      end     
+      
+      report_without_group       
+    end
+    
     def index_with_group
       
       if !@issue.nil? || !@project.nil?
         index_without_group
         return
       end
+      
+      @current_query = nil
+      begin
+        @current_query = SpentTimeQuery.find_by_name(CGI.unescape(params[:v][:query]))
+      rescue
+      end      
       
       default_params = {"f"=>["spent_on", ""], "op"=>{"spent_on"=>"w"}, "c"=>["project", "spent_on", "user", "activity", "issue", "comments", "hours"], "query"=>{"group_by"=>"user"}}
       if params[:spent_on].nil? && params[:op].nil? && params[:c].nil? && params[:query].nil?

@@ -17,10 +17,28 @@ class SpentTimeQueryController < ApplicationController
       @query = CGI.unescape(params[:v][:query])
     rescue
     end
+    
+    @current_query = nil
+    if !@query.nil?
+       @current_query = SpentTimeQuery.find_by_name(@query)  
+    end
+    
   end
   
   def new_report
     @project_id = params[:id]
+    
+    @query = nil
+    begin
+      @query = CGI.unescape(params[:v][:query])
+    rescue
+    end    
+    
+    @current_query = nil
+    if !@query.nil?
+       @current_query = SpentTimeQuery.find_by_name(@query)  
+    end    
+    
   end  
   
   def delete
@@ -40,6 +58,7 @@ class SpentTimeQueryController < ApplicationController
   def save
     project_id = params[:query][:project]
     report = params[:query][:type] == "details" ? "" : "/report"
+     
     
     if project_id == "" 
         value = Redmine::Utils::relative_url_root.to_s + '/time_entries' + report + '?' + params[:query][:value]

@@ -7,7 +7,7 @@
 <% if defined? spent_time_queries %>
 	
 <% spent_time_queries.each do |query| %>
-	<a href="<%= (query.query + '&v[query]=' + query.name) %>">
+	<a href="<%= ((query.query.include? "&v[query]=") ? query.query : (query.query + '&v[query]=' + query.name)) %>">
 		<%= query.name %>
 	</a>
 <% end %>
