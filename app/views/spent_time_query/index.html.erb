@@ -1,21 +1,32 @@
 <h2>Saved spent time queries</h2>
 
 
-<div style="width: 400px">
+<div style="width: 70%">
+	
+	<% if User.current.admin %>
+	<p>
+		<%= form_tag({}, {method: "get", id: "spent_time_form"}) do %>
+			<%= check_box_tag :filter, "all", @filter == "all", :onclick => "this.form.submit();" %>
+			<%= label_tag :filter, "Show all queries" %>		
+	
+		<% end %>
+	</p>
+	<% end %>
+	
 	<table class="list time-entries">
 	<thead>
 	  <tr>
-			<th>Name</th>
-			<th style="text-align: center">Public</th>
-			<th style="text-align: center">Author</th>
-			<th>&nbsp;&nbsp;&nbsp;</th>
+		<th>Name</th>
+		<th style="text-align: center">Public</th>
+		<th style="text-align: center">Author</th>
+		<th>&nbsp;&nbsp;&nbsp;</th>
 	  </tr>
 	</thead>
 	<tbody>
 	<% @queries.each do |query| %>
 	  <tr>
 	  	<td>
-	  		<a href="<%= (query.query + '#query=' + query.name) %>">
+	  		<a href="<%= (query.query + '&v[query]=' + query.name) %>">
 	  			<%= query.name %>
 	  		</a>
 	  	</td>

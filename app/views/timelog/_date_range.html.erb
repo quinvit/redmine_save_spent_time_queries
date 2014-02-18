@@ -30,12 +30,16 @@
   <%= link_to_function l(:button_apply), 'submit_query_form("query_form")', :class => 'icon icon-checked' %>
   <%= link_to l(:button_clear), {:project_id => @project, :issue_id => @issue}, :class => 'icon icon-reload'  %>
   
-  <% if @issue.nil? %>
+  <% if @issue.nil? && @project.nil? %>
+  
+  <% if can_edit_current_query %>
 
   <a class="icon icon-save" href="#" 
   	onclick="$('#query_form').attr('action', '<%= Redmine::Utils::relative_url_root.to_s +  (@project ? "/projects/"+ @project.identifier : "") %>/spent_time_query/<%= action_name == 'index' ? 'new' : 'new_report' %>' + $(this).attr('href')); submit_query_form('query_form'); return false;">  		
   		<%= l(:button_save) %>
   </a>
+  
+  <% end %>
   
   <% end %>
   

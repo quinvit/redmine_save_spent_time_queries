@@ -13,6 +13,17 @@ module SpentTimeQueryHelper
     @queries = SpentTimeQuery.where("user_id = ? OR is_public = ?", User.current.id, true)
     @queries
   end  
+      
+  def can_edit_current_query
+    query = nil
+    begin
+      query = SpentTimeQuery.find_by_name(params[:v][:query])
+    rescue
+    end
+    
+    @query_editable = query.nil? || query.user_id == User.current.id || User.current.admin
+    @query_editable    
+  end     
   
 end
 
@@ -28,7 +39,8 @@ module TimelogHelperPatch
     
   end
 
-  module InstanceMethods
+  module InstanceMethods      
+    
     def format_criteria_value_with_add_issue_description(criteria_options, value)
       if value.blank?
         "[#{l(:label_none)}]"
@@ -60,14 +72,24 @@ module TimelogControllerPatch
 
       alias_method_chain :index, :group
     end    
-    
   end
 
   module InstanceMethods
     
-    include Redmine::Pagination
+    include Redmine::Pagination    
     
     def index_with_group
+      
+      if !@issue.nil? || !@project.nil?
+        index_without_group
+        return
+      end
+      
+      default_params = {"f"=>["spent_on", ""], "op"=>{"spent_on"=>"w"}, "c"=>["project", "spent_on", "user", "activity", "issue", "comments", "hours"], "query"=>{"group_by"=>"user"}}
+      if params[:spent_on].nil? && params[:op].nil? && params[:c].nil? && params[:query].nil?
+        params.merge!(default_params)
+      end
+      
       @query = TimeEntryQuery.build_from_params(params, :project => @project, :name => '_')      
       
       scope = time_entry_scope

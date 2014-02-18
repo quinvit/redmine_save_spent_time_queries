@@ -6,11 +6,17 @@ class SpentTimeQueryController < ApplicationController
 
   def index
     @project_id = params[:id]
-    @queries = User.current.admin ? SpentTimeQuery.includes(:user) : SpentTimeQuery.where(:user_id => User.current.id).includes(:user)
+    @filter = params[:filter]    
+    @queries = (User.current.admin && @filter == "all") ? SpentTimeQuery.includes(:user) : SpentTimeQuery.where(:user_id => User.current.id).includes(:user)
   end
 
   def new
     @project_id = params[:id]
+    @query = nil
+    begin
+      @query = CGI.unescape(params[:v][:query])
+    rescue
+    end
   end
   
   def new_report
@@ -21,7 +27,7 @@ class SpentTimeQueryController < ApplicationController
     query = SpentTimeQuery.find(params[:query_id])
     
     if query.user_id != User.current.id && !User.current.admin
-      render_404
+      render_403
       return   
     else
       query.delete      
