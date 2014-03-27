@@ -2,10 +2,10 @@
 
 
 <div style="width: 70%">
-	
+
 	<% if User.current.admin %>
 	<p>
-		<%= form_tag({}, {method: "get", id: "spent_time_form"}) do %>
+		<%= form_tag 'spent_time_query', :method => "get", :id => "spent_time_form" do %>
 			<%= check_box_tag :filter, "all", @filter == "all", :onclick => "this.form.submit();" %>
 			<%= label_tag :filter, "Show all queries" %>		
 	
