@@ -43,9 +43,7 @@ module TimelogHelperPatch
         if obj.is_a?(Issue)
           obj.visible? ? 
             # "#{obj.tracker} ##{obj.id}: #{obj.subject} <div class='issue_short_description'>Start date: <b>#{obj.start_date}</b>, Due date: <b>#{obj.due_date}</b>, Est. time: <b>#{obj.estimated_hours}</b></div>" 
-            "#{obj.tracker} ##{obj.id} (#{obj.start_date} => #{obj.due_date} ~#{obj.estimated_hours}): #{obj.subject}"
-             : 
-             "##{obj.id}"
+            "#{obj.tracker} ##{obj.id} (#{obj.start_date} => #{obj.due_date} ~#{obj.estimated_hours}): #{obj.subject}" : "##{obj.id}"
         else
           obj
         end
